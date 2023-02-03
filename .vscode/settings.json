@@ -1,0 +1,10 @@
+{
+    "emmet.preferences": {
+        "emmet.includeLanguages": {
+            "javascript": "javascriptreact"
+         }
+    },
+    "editor.tabSize": 2,
+    "prettier.useTabs": true,
+    "editor.indentSize": 2
+}
