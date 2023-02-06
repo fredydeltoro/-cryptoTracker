@@ -8,8 +8,8 @@ const CoinsScreen = (props: any) => {
   const [coins, setCoins] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const handlePress = () => {
-    props.navigation.navigate('Coin Detail');
+  const handlePress = (coin: any) => {
+    props.navigation.navigate('Coin Detail', { coin });
   };
 
   const getCoins = async () => {
@@ -39,7 +39,7 @@ const CoinsScreen = (props: any) => {
       <FlatList
         data={coins}
         renderItem={({ item }: any) =>  (
-          <CoinsItem item={item} />
+          <CoinsItem item={item} onPress={handlePress} />
         )}
       />
     </View>
