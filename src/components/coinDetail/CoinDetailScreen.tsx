@@ -1,9 +1,12 @@
-import {StyleSheet, Text, View, Image, SectionList} from 'react-native';
+import {StyleSheet, Text, View, Image, SectionList, FlatList} from 'react-native';
 import {useEffect, useState} from 'react';
-import colors from '../res/colors';
+import colors from '../../res/colors';
+import Http from '../../libs/http';
+import CoinMarketItem from './CoinMarketItem';
 
 const CoinDetailScreen = ({route, navigation}: any) => {
   const [coin, setCoin] = useState<any>({});
+  const [markets, setMarkets] = useState<any[]>([])
 
   const getSections = () => [
     {
@@ -20,16 +23,27 @@ const CoinDetailScreen = ({route, navigation}: any) => {
     },
   ];
 
-  useEffect(() => {
-    navigation.setOptions({title: route.params.coin.symbol});
-    setCoin(route.params.coin);
-  }, []);
-
   const getIcon = (name: string) =>
     name &&
     `https://c1.coinlore.com/img/25x25/${name
       .toLocaleLowerCase()
       .replace(' ', '-')}.png`;
+    
+  const getMarkets = async (coinId: string) => {
+    const res = await Http.instance.get(`https://api.coinlore.net/api/coin/markets/?id=${coinId}`)
+    setMarkets(res)
+  }
+
+  useEffect(() => {
+    setCoin(route.params.coin);
+  }, []);
+
+  useEffect(() => {
+    if (coin.symbol) {
+      navigation.setOptions({title: coin.symbol});
+      getMarkets(coin.id)
+    }
+  }, [coin])
 
   return (
     <View style={styles.container}>
@@ -37,7 +51,9 @@ const CoinDetailScreen = ({route, navigation}: any) => {
         <Image style={styles.img} source={{uri: getIcon(coin.name)}} />
         <Text style={styles.titleText}>{coin.name}</Text>
       </View>
-      <SectionList 
+
+      <SectionList
+        style={styles.section}
         sections={getSections()}
         keyExtractor={(item) =>  item}
         renderItem={({ item }) =>   (
@@ -51,6 +67,17 @@ const CoinDetailScreen = ({route, navigation}: any) => {
           </View>
         )}
       />
+
+      <View>
+        <Text style={styles.marketTitle}>Markets</Text>
+        <FlatList
+          data={markets}
+          horizontal={true}
+          renderItem={({ item }) => (
+            <CoinMarketItem item={item} />
+          )}
+        />
+      </View>
     </View>
   );
 };
@@ -75,6 +102,9 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
   },
+  section: {
+    maxHeight: 220
+  },
   sectionHeader:{
     backgroundColor: "rgba(0, 0, 0, 0.2)",
     padding: 8
@@ -90,6 +120,12 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 14,
     fontWeight: 'bold'
+  },
+  marketTitle: {
+    color: colors.white,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    marginLeft: 16
   }
 });
 
