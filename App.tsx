@@ -29,7 +29,7 @@ function App() {
         }}
       >
         <Screen
-          name='Coins Tab'
+          name='Coins '
           component={CoinsStack}
           options={{
             tabBarIcon: ({ size, color }) => (
@@ -41,7 +41,7 @@ function App() {
           }}
         />
         <Screen
-          name='Favorites'
+          name='Favorites '
           component={FavoritesStack}
           options={{
             tabBarIcon: ({ size, color }) => (

@@ -5,13 +5,13 @@ import colors from '../res/colors';
 import CoinsItem from './CoinsItem';
 import CoinsSearch from './CoinsSearch';
 
-const CoinsScreen = (props: any) => {
+const CoinsScreen = ({ navigation }: any) => {
   const [coins, setCoins] = useState([])
   const [allCoins, setAllCoins] = useState([])
   const [loading, setLoading] = useState(true)
 
   const handlePress = (coin: any) => {
-    props.navigation.navigate('Coin Detail', { coin });
+    navigation.navigate('Coin Detail', { coin });
   };
 
   const handleSearch = (query: string) => {

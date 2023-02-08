@@ -29,8 +29,7 @@ class Storage {
 
   getAllKeys = async () => {
     try {
-      return await AsyncStorage.getAllKeys()
-      
+      return await AsyncStorage.getAllKeys()    
     } catch (err: any) {
       console.error("storage get error", err)
 
@@ -38,9 +37,9 @@ class Storage {
     }
   }
 
-  multiGet =async (keys: string[]) => {
+  multiGet =async (keys: any) => {
     try {
-      
+      return await AsyncStorage.multiGet(keys)
     } catch (err: any) {
       console.error("storage get error", err)
 
