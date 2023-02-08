@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, SectionList, FlatList, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, SectionList, FlatList, Pressable, Alert } from 'react-native';
 import {useEffect, useState} from 'react';
 import colors from '../../res/colors';
 import Http from '../../libs/http';
@@ -47,14 +47,25 @@ const CoinDetailScreen = ({route, navigation}: any) => {
     }
   }
 
-  const removeFavorite = async () => {
-    const key = `favorite-${coin.id}`
+  const removeFavorite =  () => {
+    Alert.alert("Remove favorite", "Are you sure?", [
+      {
+        text: 'cancel',
+        style: 'cancel'
+      },
+      {
+        text: 'Remove',
+        style: 'destructive',
+        onPress: async () => { 
+          const key = `favorite-${coin.id}`
+          const stored = await Storage.instance.remove(key)
 
-    const stored = await Storage.instance.remove(key)
-
-    if (stored) {
-      setFavorite(false)
-    }
+          if (stored) {
+            setFavorite(false)
+          }
+        }
+      }
+    ])
   }
 
   const getFavorite = async () => {
