@@ -29,7 +29,7 @@ function App() {
         }}
       >
         <Screen
-          name='Coins'
+          name='Coins Tab'
           component={CoinsStack}
           options={{
             tabBarIcon: ({ size, color }) => (
