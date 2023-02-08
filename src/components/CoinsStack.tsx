@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import CoinsScreen from './CoinsScreen';
@@ -31,7 +30,5 @@ const CoinsStack = () => {
     </Navigator>
   )
 }
-
-const styles = StyleSheet.create({})
 
 export default CoinsStack

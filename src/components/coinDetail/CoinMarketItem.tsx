@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import colors from '../../res/colors';
 
-const CoinMarketItem = ({ item }) => {
+const CoinMarketItem = ({ item }: any) => {
   return (
     <View style={styles.container}>
       <Text style={styles.nameText}>{ item.name }</Text>
